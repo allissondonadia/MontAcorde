@@ -1,7 +1,7 @@
 import { Dot, Position, FRETBOARD_CONFIG } from "../types/chord";
 
 export const getDotPosition = (dot: Dot): Position => {
-  const casa = (dot.casa ?? 5.6) - 1;
+  const casa = (dot.casa ?? 5.7) - 1;
 
   const casaSpacing =
     (FRETBOARD_CONFIG.height - 60) / FRETBOARD_CONFIG.casaCount;

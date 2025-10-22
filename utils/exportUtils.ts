@@ -25,8 +25,8 @@ export const exportChordAsPng = async ({
     console.log("exportWithBackground started");
     const titleHeight = 40;
     const canvas = document.createElement("canvas");
-    canvas.width = FRETBOARD_CONFIG.width * 2;
-    canvas.height = (FRETBOARD_CONFIG.height + titleHeight) * 2;
+    canvas.width = FRETBOARD_CONFIG.backgroundImageWidth * 2;
+    canvas.height = (FRETBOARD_CONFIG.backgroundImageHeight + titleHeight) * 2;
     const ctx = canvas.getContext("2d");
 
     if (!ctx) {
@@ -50,7 +50,7 @@ export const exportChordAsPng = async ({
       0,
       titleHeight * 2,
       canvas.width,
-      FRETBOARD_CONFIG.height * 2
+      FRETBOARD_CONFIG.backgroundImageHeight * 2
     );
 
     // Draw SVG on top (offset down)
@@ -67,7 +67,7 @@ export const exportChordAsPng = async ({
         0,
         titleHeight * 2,
         canvas.width,
-        FRETBOARD_CONFIG.height * 2
+        FRETBOARD_CONFIG.backgroundImageHeight * 2
       );
 
       // Export PNG
