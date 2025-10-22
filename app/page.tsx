@@ -2,9 +2,9 @@
 
 import dynamic from 'next/dynamic'
 import { useRef } from 'react'
-import { ChordBuilderRef } from '../components/chord/ChordBuilder'
+import { ChordBuilderRef } from '../components/builder/ChordBuilder'
 
-const ChordBuilder = dynamic(() => import('../components/chord/ChordBuilder'), { ssr: false })
+const ChordBuilder = dynamic(() => import('../components/builder/ChordBuilder'), { ssr: false })
 
 export default function Page() {
   const chordBuilderRef = useRef<ChordBuilderRef>(null)

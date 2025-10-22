@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
 import PresetButtons from '../ui/PresetButtons';
 import FingerSelector from '../ui/FingerSelector';
-import ChordNameInput from './ChordNameInput';
+import ChordNameInput from '../chord/ChordNameInput';
 import Fretboard from '../ui/Fretboard';
 import CapotrasteControl from '../ui/CapotrasteControl';
 import { Dot, SnapResult, FRETBOARD_CONFIG, PRESETS, BASE_DOTS } from '../../types/chord';
