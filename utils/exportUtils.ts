@@ -113,7 +113,7 @@ export const createCanvasFromSvg = (
   svg: SVGSVGElement,
   width: number,
   height: number
-): HTMLCanvasElement => {
+): Promise<HTMLCanvasElement> => {
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
