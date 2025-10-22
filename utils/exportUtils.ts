@@ -9,7 +9,7 @@ interface ExportOptions {
 export const exportChordAsPng = async ({
   svg,
   chordName,
-  backgroundImageUrl = "/grade_2.png",
+  backgroundImageUrl = "/grade.png",
 }: ExportOptions): Promise<void> => {
   console.log("exportChordAsPng started");
 

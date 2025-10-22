@@ -10,6 +10,7 @@ import { Dot, FRETBOARD_CONFIG } from '../../types/chord';
 interface FretboardProps {
   dots: Dot[];
   hoverDot?: Dot | null;
+  fretPosition?: number;
   onDotClick: (e: React.MouseEvent<SVGSVGElement>) => void;
   onMouseMove?: (e: React.MouseEvent<SVGSVGElement>) => void;
   onMouseLeave?: () => void;
@@ -18,7 +19,8 @@ interface FretboardProps {
 
 const Fretboard: React.FC<FretboardProps> = ({ 
   dots, 
-  hoverDot, 
+  hoverDot,
+  fretPosition = 0,
   onDotClick, 
   onMouseMove, 
   onMouseLeave, 
@@ -30,6 +32,9 @@ const Fretboard: React.FC<FretboardProps> = ({
   const isDotAtHoverPosition = hoverDot && dots.some(
     d => d.corda === hoverDot.corda && d.casa === hoverDot.casa
   );
+  
+  // Escolhe a imagem de fundo baseada na posição
+  const backgroundImage = fretPosition > 0 ? '/grade_alta.png' : '/grade.png';
   
   return (
     <svg
@@ -49,7 +54,7 @@ const Fretboard: React.FC<FretboardProps> = ({
           height={height}
         >
           <image
-            href="/grade_2.png"
+            href={backgroundImage}
             width={backgroundImageWidth}
             height={backgroundImageHeight}
             preserveAspectRatio="xMidYMid slice"
@@ -58,6 +63,20 @@ const Fretboard: React.FC<FretboardProps> = ({
       </defs>
       
       <rect x={0} y={0} width={width} height={height} fill="url(#guitarFretboard)" />
+      
+      {/* Indicador de posição quando não está no início do braço */}
+      {fretPosition > 0 && (
+        <text
+          x={15}
+          y={90}
+          fontSize="24"
+          fontWeight="bold"
+          fill="#333"
+          textAnchor="middle"
+        >
+          {fretPosition}ª
+        </text>
+      )}
       
       {dots.map((dot, index) => {
         switch (dot.type) {

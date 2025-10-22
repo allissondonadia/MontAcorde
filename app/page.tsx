@@ -66,6 +66,7 @@ export default function Page() {
                 <h3 className="font-semibold mb-2">🎸 Controles:</h3>
                 <ul className="list-disc list-inside space-y-1 ml-2">
                   <li><strong>Dedos:</strong> Selecione qual dedo (1-4) será usado ao clicar no fretboard</li>
+                  <li><strong>Posição:</strong> Indique a casa inicial quando não estiver no começo do braço (muda o fundo para grade alta)</li>
                   <li><strong>Capotraste:</strong> Adicione um capotraste e escolha em qual casa</li>
                   <li><strong>Pestana:</strong> Adicione uma pestana (barre) definindo corda inicial e casa</li>
                   <li><strong>Limpar Tudo:</strong> Remove todos os dots e reseta o diagrama</li>

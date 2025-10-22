@@ -5,6 +5,7 @@ import ChordNameInput from '../chord/ChordNameInput';
 import Fretboard from '../ui/Fretboard';
 import CapotrasteControl from '../ui/CapotrasteControl';
 import RoundedControl from '../ui/RoundedControl';
+import FretPositionControl from '../ui/FretPositionControl';
 import { Dot, FRETBOARD_CONFIG, PRESETS, BASE_DOTS } from '../../types/chord';
 import { exportChordAsPng } from '../../utils/exportUtils';
 
@@ -18,6 +19,7 @@ const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
   const [chordName, setChordName] = useState('');
   const [selectedFinger, setSelectedFinger] = useState<string>('1');
   const [hoverDot, setHoverDot] = useState<Dot | null>(null);
+  const [fretPosition, setFretPosition] = useState<number>(0);
   
   const casaSpacing = (FRETBOARD_CONFIG.height - 60) / FRETBOARD_CONFIG.casaCount;
   const cordaSpacing = (FRETBOARD_CONFIG.width - 60) / (FRETBOARD_CONFIG.cordaCount - 1);
@@ -122,12 +124,14 @@ const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
     const svg = svgRef.current;
     if (!svg) return;
     
+    const backgroundImage = fretPosition > 0 ? '/grade_alta.png' : '/grade.png';
+    
     await exportChordAsPng({
       svg,
       chordName,
-      backgroundImageUrl: '/grade_2.png'
+      backgroundImageUrl: backgroundImage
     });
-  }, [chordName]);
+  }, [chordName, fretPosition]);
 
   useImperativeHandle(ref, () => ({
     exportChord: handleExport
@@ -156,6 +160,11 @@ const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
     setDots(BASE_DOTS);
     setChordName('');
     setSelectedFinger('1');
+    setFretPosition(0);
+  };
+
+  const handleFretPositionChange = (position: number) => {
+    setFretPosition(position);
   };
 
   useEffect(() => {
@@ -189,6 +198,7 @@ const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
         <Fretboard
           dots={dots}
           hoverDot={hoverDot}
+          fretPosition={fretPosition}
           onDotClick={handleDotClick}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
@@ -208,6 +218,10 @@ const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
         <div className="bg-white rounded-lg shadow p-4">
           <h3 className="text-sm font-semibold text-gray-700 mb-3">Controles</h3>
           <div className="flex flex-col gap-3">
+            <FretPositionControl
+              onPositionChange={handleFretPositionChange}
+            />
+            
             <CapotrasteControl
               onCapotrasteChange={handleCapotrasteChange}
             />
