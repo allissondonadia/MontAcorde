@@ -4,7 +4,7 @@ import FingerSelector from '../ui/FingerSelector';
 import ChordNameInput from './ChordNameInput';
 import Fretboard from '../ui/Fretboard';
 import CapotrasteControl from '../ui/CapotrasteControl';
-import { Dot, SnapResult, FRETBOARD_CONFIG, PRESETS } from '../../types/chord';
+import { Dot, SnapResult, FRETBOARD_CONFIG, PRESETS, BASE_DOTS } from '../../types/chord';
 import { exportChordAsPng } from '../../utils/exportUtils';
 
 export interface ChordBuilderRef {
@@ -13,7 +13,7 @@ export interface ChordBuilderRef {
 
 const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
-  const [dots, setDots] = useState<Dot[]>([]);
+  const [dots, setDots] = useState<Dot[]>(BASE_DOTS);
   const [chordName, setChordName] = useState('');
   const [selectedFinger, setSelectedFinger] = useState<string>('1');
   

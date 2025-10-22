@@ -25,6 +25,15 @@ export const FRETBOARD_CONFIG = {
   backgroundImageHeight: 700,
 } as const;
 
+export const BASE_DOTS: Dot[] = [
+  { corda: 6, type: "gray" },
+  { corda: 5, type: "outline" },
+  { corda: 4, type: "outline" },
+  { corda: 3, type: "outline" },
+  { corda: 2, type: "outline" },
+  { corda: 1, type: "outline" },
+];
+
 export const PRESETS: Record<string, Dot[]> = {
   Am: [
     { corda: 2, casa: 1, finger: "1" },
