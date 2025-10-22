@@ -31,26 +31,29 @@ const CapotrasteControl: React.FC<CapotrasteControlProps> = ({
     <div className="flex flex-col gap-2">
       <button
         onClick={handleCapotrasteToggle}
-        className={`px-3 py-2 h-10 rounded transition-colors ${
-          capotrasteNumber ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }`}>
-        {"Capotraste"}
+        title="Ativar/desativar capotraste no diagrama"
+        className={`px-3 py-2 h-10 rounded transition-all duration-200 font-medium ${
+          capotrasteNumber ? 'bg-indigo-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }`}>
+        🎸 Capotraste
       </button>
       
       {!!capotrasteNumber && (
         <div className="flex flex-row gap-2 items-center">
           <button
             onClick={handleCapotrasteDown}
-            className="px-2 py-1 h-8 w-8 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
+            title="Diminuir casa do capotraste"
+            className="px-2 py-1 h-8 w-8 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={capotrasteNumber <= 0}
           >
             -
           </button>
-          <span className="px-2 py-1 w-10 text-center font-bold">
+          <span className="px-2 py-1 w-10 text-center font-bold" title={`Capotraste na ${capotrasteNumber}ª casa`}>
             {capotrasteNumber}º
           </span>
           <button
             onClick={handleCapotrasteUp}
-            className="px-2 py-1 h-8 w-8 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
+            title="Aumentar casa do capotraste"
+            className="px-2 py-1 h-8 w-8 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={capotrasteNumber >= 12}
           >
             +

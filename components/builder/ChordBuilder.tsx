@@ -17,6 +17,7 @@ const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
   const [dots, setDots] = useState<Dot[]>(BASE_DOTS);
   const [chordName, setChordName] = useState('');
   const [selectedFinger, setSelectedFinger] = useState<string>('1');
+  const [hoverDot, setHoverDot] = useState<Dot | null>(null);
   
   const casaSpacing = (FRETBOARD_CONFIG.height - 60) / FRETBOARD_CONFIG.casaCount;
   const cordaSpacing = (FRETBOARD_CONFIG.width - 60) / (FRETBOARD_CONFIG.cordaCount - 1);
@@ -62,6 +63,27 @@ const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
       return [...dots, newDot];
     }
   }
+
+  const handleMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    
+    const rect = svg.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const dot = snap(x, y);
+    
+    // Só mostra preview se for dentro do fretboard válido
+    if (dot.casa <= 5 && dot.casa >= 1 && dot.corda >= 1 && dot.corda <= 6) {
+      setHoverDot({ ...dot, finger: selectedFinger });
+    } else {
+      setHoverDot(null);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setHoverDot(null);
+  };
 
   const handleDotClick = (e: React.MouseEvent<SVGSVGElement>) => {
     const svg = svgRef.current;
@@ -130,13 +152,28 @@ const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
     }
   };
 
+  const handleClearAll = () => {
+    setDots(BASE_DOTS);
+    setChordName('');
+    setSelectedFinger('1');
+  };
+
   useEffect(() => {
-    const handlePointerMove = (e: PointerEvent) => {
-      // Future pointer move functionality can be added here
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Atalhos de teclado para selecionar dedos (1-4)
+      if (['1', '2', '3', '4'].includes(e.key)) {
+        e.preventDefault();
+        setSelectedFinger(e.key);
+      }
+      // Atalho Ctrl/Cmd + Z para limpar (ou apenas Delete/Backspace)
+      if ((e.key === 'Delete' || e.key === 'Backspace') && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        handleClearAll();
+      }
     };
     
-    globalThis.addEventListener('pointermove', handlePointerMove);
-    return () => globalThis.removeEventListener('pointermove', handlePointerMove);
+    globalThis.addEventListener('keydown', handleKeyDown);
+    return () => globalThis.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   return (
@@ -151,24 +188,43 @@ const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
         
         <Fretboard
           dots={dots}
+          hoverDot={hoverDot}
           onDotClick={handleDotClick}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
           svgRef={svgRef}
         />
       </div>
             
-      <div className="gap-2 flex flex-col gap-8">
-        <FingerSelector
-          selectedFinger={selectedFinger}
-          onFingerSelect={setSelectedFinger}
-        />
+      <div className="gap-2 flex flex-col gap-6">
+        <div className="bg-white rounded-lg shadow p-4">
+          <h3 className="text-sm font-semibold text-gray-700 mb-3">Dedos</h3>
+          <FingerSelector
+            selectedFinger={selectedFinger}
+            onFingerSelect={setSelectedFinger}
+          />
+        </div>
         
-        <CapotrasteControl
-          onCapotrasteChange={handleCapotrasteChange}
-        />
-        
-        <RoundedControl
-          onRoundedChange={handleRoundedChange}
-        />
+        <div className="bg-white rounded-lg shadow p-4">
+          <h3 className="text-sm font-semibold text-gray-700 mb-3">Controles</h3>
+          <div className="flex flex-col gap-3">
+            <CapotrasteControl
+              onCapotrasteChange={handleCapotrasteChange}
+            />
+            
+            <RoundedControl
+              onRoundedChange={handleRoundedChange}
+            />
+            
+            <button
+              onClick={handleClearAll}
+              className="px-3 py-2 h-10 rounded bg-red-500 text-white hover:bg-red-600 transition-colors font-medium"
+              title="Limpar todos os dots e resetar o acorde"
+            >
+              🗑️ Limpar Tudo
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

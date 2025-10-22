@@ -57,29 +57,32 @@ const RoundedControl: React.FC<RoundedControlProps> = ({
     <div className="flex flex-col gap-2">
       <button
         onClick={handleToggle}
-        className={`px-3 py-2 h-10 rounded transition-colors ${
-          isActive ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }`}>
-        {"Pestana"}
+        title="Ativar/desativar pestana (barre) no diagrama"
+        className={`px-3 py-2 h-10 rounded transition-all duration-200 font-medium ${
+          isActive ? 'bg-indigo-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }`}>
+        🎵 Pestana
       </button>
       
       {isActive && (
         <>
           <div className="flex flex-col gap-1">
-            <span className="text-xs text-gray-600 text-center">Corda</span>
+            <span className="text-xs text-gray-600 text-center font-semibold">Corda inicial</span>
             <div className="flex flex-row gap-2 items-center">
               <button
                 onClick={handleCordaDown}
-                className="px-2 py-1 h-8 w-8 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
+                title="Diminuir corda da pestana"
+                className="px-2 py-1 h-8 w-8 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={corda <= 1}
               >
                 -
               </button>
-              <span className="px-2 py-1 w-10 text-center font-bold">
+              <span className="px-2 py-1 w-10 text-center font-bold" title={`Pestana começa na ${corda}ª corda`}>
                 {corda}º
               </span>
               <button
                 onClick={handleCordaUp}
-                className="px-2 py-1 h-8 w-8 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
+                title="Aumentar corda da pestana"
+                className="px-2 py-1 h-8 w-8 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={corda >= 6}
               >
                 +
@@ -88,21 +91,23 @@ const RoundedControl: React.FC<RoundedControlProps> = ({
           </div>
 
           <div className="flex flex-col gap-1">
-            <span className="text-xs text-gray-600 text-center">Casa</span>
+            <span className="text-xs text-gray-600 text-center font-semibold">Casa</span>
             <div className="flex flex-row gap-2 items-center">
               <button
                 onClick={handleCasaDown}
-                className="px-2 py-1 h-8 w-8 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
+                title="Diminuir casa da pestana"
+                className="px-2 py-1 h-8 w-8 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={casa <= 1}
               >
                 -
               </button>
-              <span className="px-2 py-1 w-10 text-center font-bold">
+              <span className="px-2 py-1 w-10 text-center font-bold" title={`Pestana na ${casa}ª casa`}>
                 {casa}º
               </span>
               <button
                 onClick={handleCasaUp}
-                className="px-2 py-1 h-8 w-8 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
+                title="Aumentar casa da pestana"
+                className="px-2 py-1 h-8 w-8 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={casa >= 12}
               >
                 +
