@@ -46,10 +46,10 @@ const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
   }
 
   const ajustaDedilhado = (corda: number): Dot[] => {
-    const existingDot = dots.find(d => d.corda === corda);
+    const existingDot = dots.find(d => d.corda === corda && !d.casa);
     if(existingDot) {
       const newType = nextChordType(existingDot.type);
-      const newDots = dots.filter(d => d.corda !== corda);
+      const newDots = dots.filter(d => d.corda !== corda || d.casa);
       if(newType) {
         existingDot.type = newType;
         return [...newDots, existingDot];
@@ -63,7 +63,6 @@ const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
   }
 
   const handleDotClick = (e: React.MouseEvent<SVGSVGElement>) => {
-    console.log('handleDotClick started');
     const svg = svgRef.current;
     if (!svg) return;
     
@@ -71,16 +70,17 @@ const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const dot = snap(x, y);
-    
+
+    const filteredDots = dots.filter(d => (d.finger !== selectedFinger));    
     if(dot.casa > 5) {
       setDots(ajustaDedilhado(dot.corda));
     } else {
-      const existingDot = dots.find(d => d.corda === dot.corda && d.casa === dot.casa);
+      const existingDot = filteredDots.find(d => (d.corda === dot.corda && d.casa === dot.casa));
       if (existingDot) {
-        setDots(dots.filter(d => d.corda !== dot.corda || d.casa !== dot.casa));
+        setDots(dots.filter(d => (d.corda !== dot.corda || d.casa !== dot.casa)));
       } else {
         const newDot = { ...dot, finger: selectedFinger };
-        setDots([...dots, newDot]);
+        setDots([...filteredDots, newDot]);
         const nextFinger = selectedFinger === '4' ? '1' : String(Number(selectedFinger) + 1);
         setSelectedFinger(nextFinger);
       }
