@@ -2,13 +2,18 @@ export type Dot = {
   corda: number;
   casa?: number;
   finger?: string;
-  type?: "dot" | "square" | "gray" | "outline" | "x";
+  type?: "dot" | "square" | "gray" | "outline" | "x" | "rounded";
 };
 
 export type Position = {
   cx: number;
   cy: number;
 };
+
+export interface ChordProps {
+  dot: Dot;
+  index: number;
+}
 
 export const FRETBOARD_CONFIG = {
   casaDeslocamento: 95,

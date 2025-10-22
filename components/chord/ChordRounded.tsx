@@ -1,18 +1,20 @@
 import React from 'react';
-import { getDotPosition } from '../../utils/positionUtils';
 import { ChordProps } from '@/types/chord';
+import { getDotPosition } from '../../utils/positionUtils';
 
-const ChordSquare: React.FC<ChordProps> = ({ dot, index }) => {
+const ChordRounded: React.FC<ChordProps> = ({ dot, index }) => {
   const position = getDotPosition(dot);
   const size = 24;
   
   return (
-    <g key={`square-${dot.corda}-${dot.casa}-${index}`}>
+    <g key={`rounded-${dot.corda}-${dot.casa}-${index}`}>
       <rect 
         x={position.cx - (size*2)} 
         y={position.cy - size} 
         width={size * 2 * 12} 
         height={size * 2} 
+        rx={12}
+        ry={12}
         fill="#000" 
       />
       {dot.finger && (
@@ -44,4 +46,5 @@ const ChordSquare: React.FC<ChordProps> = ({ dot, index }) => {
   );
 };
 
-export default ChordSquare;
+export default ChordRounded;
+

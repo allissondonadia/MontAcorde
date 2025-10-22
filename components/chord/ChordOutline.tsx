@@ -1,13 +1,8 @@
 import React from 'react';
-import { Dot } from '../../types/chord';
 import { getDotPosition } from '../../utils/positionUtils';
+import { ChordProps } from '@/types/chord';
 
-interface ChordOutlineProps {
-  dot: Dot;
-  index: number;
-}
-
-const ChordOutline: React.FC<ChordOutlineProps> = ({ dot, index }) => {
+const ChordOutline: React.FC<ChordProps> = ({ dot, index }) => {
   const position = getDotPosition(dot);
   position.cx = position.cx + 1;
   

@@ -1,13 +1,8 @@
 import React from 'react';
-import { Dot } from '../../types/chord';
 import { getDotPosition } from '../../utils/positionUtils';
+import { ChordProps } from '@/types/chord';
 
-interface ChordXProps {
-  dot: Dot;
-  index: number;
-}
-
-const ChordX: React.FC<ChordXProps> = ({ dot, index }) => {
+const ChordX: React.FC<ChordProps> = ({ dot, index }) => {
   const position = getDotPosition(dot);
   const size = 16;
   

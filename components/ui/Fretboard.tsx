@@ -1,6 +1,7 @@
 import React from 'react';
 import ChordDot from '../chord/ChordDot';
 import ChordSquare from '../chord/ChordSquare';
+import ChordRounded from '../chord/ChordRounded';
 import ChordGray from '../chord/ChordGray';
 import ChordOutline from '../chord/ChordOutline';
 import ChordX from '../chord/ChordX';
@@ -47,6 +48,14 @@ const Fretboard: React.FC<FretboardProps> = ({ dots, onDotClick, svgRef }) => {
             return (
               <ChordSquare
                 key={`square-${dot.corda}-${dot.casa}-${index}`}
+                dot={dot}
+                index={index}
+              />
+            );
+          case "rounded":
+            return (
+              <ChordRounded
+                key={`rounded-${dot.corda}-${dot.casa}-${index}`}
                 dot={dot}
                 index={index}
               />
