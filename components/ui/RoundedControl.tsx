@@ -75,7 +75,7 @@ const RoundedControl: React.FC<RoundedControlProps> = ({
                 -
               </button>
               <span className="px-2 py-1 w-10 text-center font-bold">
-                {corda}
+                {corda}º
               </span>
               <button
                 onClick={handleCordaUp}
