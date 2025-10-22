@@ -4,7 +4,7 @@ import FingerSelector from '../ui/FingerSelector';
 import ChordNameInput from '../chord/ChordNameInput';
 import Fretboard from '../ui/Fretboard';
 import CapotrasteControl from '../ui/CapotrasteControl';
-import { Dot, SnapResult, FRETBOARD_CONFIG, PRESETS, BASE_DOTS } from '../../types/chord';
+import { Dot, FRETBOARD_CONFIG, PRESETS, BASE_DOTS } from '../../types/chord';
 import { exportChordAsPng } from '../../utils/exportUtils';
 
 export interface ChordBuilderRef {
@@ -20,7 +20,7 @@ const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
   const casaSpacing = (FRETBOARD_CONFIG.height - 60) / FRETBOARD_CONFIG.casaCount;
   const cordaSpacing = (FRETBOARD_CONFIG.width - 60) / (FRETBOARD_CONFIG.cordaCount - 1);
 
-  const snap = useCallback((x: number, y: number): SnapResult => {
+  const snap = (x: number, y: number): Dot => {
     const svg = svgRef.current;
     if (!svg) return { corda: 1, casa: 1 };
     
@@ -32,9 +32,37 @@ const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
     const casa = Math.round((ry - 30) / casaSpacing) + 1;
     
     return { corda, casa };
-  }, [casaSpacing, cordaSpacing]);
+  };
 
-  const handleDotClick = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
+  const nextChordType = (type: string) => {
+    switch(type) {
+      case "gray":
+        return "outline";
+      case "outline":
+        return "x";
+      default:
+        return undefined;
+    }
+  }
+
+  const ajustaDedilhado = (corda: number): Dot[] => {
+    const existingDot = dots.find(d => d.corda === corda);
+    if(existingDot) {
+      const newType = nextChordType(existingDot.type);
+      const newDots = dots.filter(d => d.corda !== corda);
+      if(newType) {
+        existingDot.type = newType;
+        return [...newDots, existingDot];
+      } else {
+        return newDots
+      }
+    } else {
+      const newDot: Dot = { corda: corda, type: "gray" };
+      return [...dots, newDot];
+    }
+  }
+
+  const handleDotClick = (e: React.MouseEvent<SVGSVGElement>) => {
     console.log('handleDotClick started');
     const svg = svgRef.current;
     if (!svg) return;
@@ -42,24 +70,22 @@ const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
     const rect = svg.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    const snapped = snap(x, y);
-
-    setDots(prevDots => {
-      const existingDot = prevDots.find(d => d.corda === snapped.corda && d.casa === snapped.casa);
-      
+    const dot = snap(x, y);
+    
+    if(dot.casa > 5) {
+      setDots(ajustaDedilhado(dot.corda));
+    } else {
+      const existingDot = dots.find(d => d.corda === dot.corda && d.casa === dot.casa);
       if (existingDot) {
-        return prevDots.filter(d => d.corda !== snapped.corda || d.casa !== snapped.casa);
+        setDots(dots.filter(d => d.corda !== dot.corda || d.casa !== dot.casa));
       } else {
-        const filteredDots = prevDots.filter(d => d.finger !== selectedFinger);
-        const newDot = { ...snapped, finger: selectedFinger };
-        
+        const newDot = { ...dot, finger: selectedFinger };
+        setDots([...dots, newDot]);
         const nextFinger = selectedFinger === '4' ? '1' : String(Number(selectedFinger) + 1);
         setSelectedFinger(nextFinger);
-        
-        return [...filteredDots, newDot];
       }
-    });
-  }, [snap, selectedFinger]);
+    }
+  };
 
   const loadPreset = useCallback((name: string) => {
     const preset = PRESETS[name];

@@ -10,11 +10,6 @@ export type Position = {
   cy: number;
 };
 
-export type SnapResult = {
-  corda: number;
-  casa?: number;
-};
-
 export const FRETBOARD_CONFIG = {
   casaDeslocamento: 95,
   casaCount: 5,
