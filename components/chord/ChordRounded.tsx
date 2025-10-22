@@ -9,7 +9,7 @@ const ChordRounded: React.FC<ChordProps> = ({ dot, index }) => {
   return (
     <g key={`rounded-${dot.corda}-${dot.casa}-${index}`}>
       <rect 
-        x={position.cx - (size*2)} 
+        x={position.cx - (size)} 
         y={position.cy - size} 
         width={size * 2 * 12} 
         height={size * 2} 

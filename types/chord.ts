@@ -50,10 +50,21 @@ export const PRESETS: Record<string, Dot[]> = {
     { corda: 4, casa: 2, finger: "2" },
     { corda: 5, casa: 3, finger: "3" },
   ],
+  Cm7: [
+    { corda: 5, casa: 3, type: "rounded" },
+    { corda: 2, casa: 4, finger: "2" },
+    { corda: 4, casa: 5, finger: "3" },
+  ],
   D: [
     { corda: 3, casa: 2, finger: "1" },
     { corda: 1, casa: 2, finger: "2" },
     { corda: 2, casa: 3, finger: "3" },
+  ],
+  F: [
+    { corda: 6, casa: 1, type: "rounded" },
+    { corda: 3, casa: 2, finger: "2" },
+    { corda: 5, casa: 3, finger: "3" },
+    { corda: 4, casa: 3, finger: "4" },
   ],
   G: [
     { corda: 5, casa: 2, finger: "1" },

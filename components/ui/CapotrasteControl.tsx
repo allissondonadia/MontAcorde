@@ -26,6 +26,7 @@ const CapotrasteControl: React.FC<CapotrasteControlProps> = ({
     setCapotrasteNumber(newNumber);
     onCapotrasteChange(newNumber);
   };
+  
   return (
     <div className="flex flex-col gap-2">
       <button
