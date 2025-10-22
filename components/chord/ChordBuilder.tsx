@@ -1,14 +1,17 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import PresetButtons from './ui/PresetButtons';
-import FingerSelector from './ui/FingerSelector';
-import ChordNameInput from './ui/ChordNameInput';
-import ExportButton from './ui/ExportButton';
-import Fretboard from './ui/Fretboard';
-import CapotrasteControl from './ui/CapotrasteControl';
-import { Dot, SnapResult, FRETBOARD_CONFIG, PRESETS } from '../types/chord';
-import { exportChordAsPng } from '../utils/exportUtils';
+import React, { useCallback, useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
+import PresetButtons from '../ui/PresetButtons';
+import FingerSelector from '../ui/FingerSelector';
+import ChordNameInput from './ChordNameInput';
+import Fretboard from '../ui/Fretboard';
+import CapotrasteControl from '../ui/CapotrasteControl';
+import { Dot, SnapResult, FRETBOARD_CONFIG, PRESETS } from '../../types/chord';
+import { exportChordAsPng } from '../../utils/exportUtils';
 
-export default function ChordBuilder() {
+export interface ChordBuilderRef {
+  exportChord: () => Promise<void>;
+}
+
+const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const [dots, setDots] = useState<Dot[]>([]);
   const [chordName, setChordName] = useState('');
@@ -77,6 +80,10 @@ export default function ChordBuilder() {
     });
   }, [chordName]);
 
+  useImperativeHandle(ref, () => ({
+    exportChord: handleExport
+  }), [handleExport]);
+
   const handleCapotrasteChange = (value: number) => {
     setDots(prevDots => prevDots.filter(d => !(d.corda === 6 && d.casa === 0.15)));
     if(value) {
@@ -109,8 +116,6 @@ export default function ChordBuilder() {
           onDotClick={handleDotClick}
           svgRef={svgRef}
         />
-        
-        <ExportButton onExport={handleExport} />
       </div>
             
       <div className="gap-2 flex flex-col gap-24">
@@ -125,4 +130,8 @@ export default function ChordBuilder() {
       </div>
     </div>
   );
-}
+});
+
+ChordBuilder.displayName = 'ChordBuilder';
+
+export default ChordBuilder;

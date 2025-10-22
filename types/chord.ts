@@ -1,7 +1,7 @@
 export type Dot = {
   corda: number;
-  casa: number;
-  finger?: string | null;
+  casa?: number;
+  finger?: string;
   type?: "dot" | "square" | "gray" | "outline" | "x";
 };
 
@@ -12,7 +12,7 @@ export type Position = {
 
 export type SnapResult = {
   corda: number;
-  casa: number;
+  casa?: number;
 };
 
 export const FRETBOARD_CONFIG = {
@@ -30,11 +30,11 @@ export const PRESETS: Record<string, Dot[]> = {
     { corda: 2, casa: 1, finger: "1" },
     { corda: 3, casa: 2, finger: "3" },
     { corda: 4, casa: 2, finger: "2" },
-    { corda: 5, casa: 5.5, type: "x" },
-    { corda: 4, casa: 5.5, type: "gray" },
-    { corda: 3, casa: 5.5, type: "outline" },
-    { corda: 2, casa: 5.5, type: "outline" },
-    { corda: 1, casa: 5.5, type: "outline" },
+    { corda: 5, type: "x" },
+    { corda: 4, type: "gray" },
+    { corda: 3, type: "outline" },
+    { corda: 2, type: "outline" },
+    { corda: 1, type: "outline" },
   ],
   C: [
     { corda: 1, casa: 1, finger: "1" },

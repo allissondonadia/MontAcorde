@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dot } from '../../types/chord';
-import { getDotPosition } from '@/utils/positionUtils';
+import { getDotPosition } from '../../utils/positionUtils';
 
 interface ChordXProps {
   dot: Dot;

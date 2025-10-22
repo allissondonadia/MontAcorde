@@ -1,18 +1,18 @@
 import React from 'react';
 import { Dot } from '../../types/chord';
-import { getDotPosition } from '@/utils/positionUtils';
+import { getDotPosition } from '../../utils/positionUtils';
 
-interface ChordGrayProps {
+interface ChordDotProps {
   dot: Dot;
   index: number;
 }
 
-const ChordGray: React.FC<ChordGrayProps> = ({ dot, index }) => {
+const ChordDot: React.FC<ChordDotProps> = ({ dot, index }) => {
   const position = getDotPosition(dot);
   
   return (
-    <g key={`gray-${dot.corda}-${dot.casa}-${index}`}>
-      <circle {...position} r={16} fill="#ccc" />
+    <g key={`dot-${dot.corda}-${dot.casa}-${index}`}>
+      <circle {...position} r={24} fill="#000" />
       {dot.finger && (
         <text
           x={position.cx}
@@ -30,4 +30,4 @@ const ChordGray: React.FC<ChordGrayProps> = ({ dot, index }) => {
   );
 };
 
-export default ChordGray;
+export default ChordDot;

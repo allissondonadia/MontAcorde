@@ -1,10 +1,10 @@
 import React from 'react';
-import ChordDot from './ChordDot';
-import ChordSquare from './ChordSquare';
-import ChordGray from './ChordGray';
-import ChordOutline from './ChordOutline';
-import ChordX from './ChordX';
-import { Dot, Position, FRETBOARD_CONFIG } from '../../types/chord';
+import ChordDot from '../chord/ChordDot';
+import ChordSquare from '../chord/ChordSquare';
+import ChordGray from '../chord/ChordGray';
+import ChordOutline from '../chord/ChordOutline';
+import ChordX from '../chord/ChordX';
+import { Dot, FRETBOARD_CONFIG } from '../../types/chord';
 
 interface FretboardProps {
   dots: Dot[];

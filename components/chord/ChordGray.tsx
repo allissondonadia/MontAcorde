@@ -1,31 +1,25 @@
 import React from 'react';
 import { Dot } from '../../types/chord';
-import { getDotPosition } from '@/utils/positionUtils';
+import { getDotPosition } from '../../utils/positionUtils';
 
-interface ChordOutlineProps {
+interface ChordGrayProps {
   dot: Dot;
   index: number;
 }
 
-const ChordOutline: React.FC<ChordOutlineProps> = ({ dot, index }) => {
+const ChordGray: React.FC<ChordGrayProps> = ({ dot, index }) => {
   const position = getDotPosition(dot);
   
   return (
-    <g key={`outline-${dot.corda}-${dot.casa}-${index}`}>
-      <circle 
-        {...position} 
-        r={16} 
-        fill="none" 
-        stroke="#ccc" 
-        strokeWidth={3}
-      />
+    <g key={`gray-${dot.corda}-${dot.casa}-${index}`}>
+      <circle {...position} r={16} fill="#ccc" />
       {dot.finger && (
         <text
           x={position.cx}
           y={position.cy + 8}
           textAnchor="middle"
           fontSize={24}
-          fill="#000"
+          fill="#fff"
           fontWeight="bold"
         >
           {dot.finger}
@@ -36,4 +30,4 @@ const ChordOutline: React.FC<ChordOutlineProps> = ({ dot, index }) => {
   );
 };
 
-export default ChordOutline;
+export default ChordGray;
