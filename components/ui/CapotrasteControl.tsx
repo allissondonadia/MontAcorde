@@ -36,25 +36,27 @@ const CapotrasteControl: React.FC<CapotrasteControlProps> = ({
         {"Capotraste"}
       </button>
       
-      <div className="flex flex-row gap-2 items-center">
-        <button
-          onClick={handleCapotrasteDown}
-          className="px-2 py-1 h-8 w-8 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
-          disabled={capotrasteNumber <= 0}
-        >
-          -
-        </button>
-        <span className="px-2 py-1 w-10 text-center font-bold">
-          {capotrasteNumber}º
-        </span>
-        <button
-          onClick={handleCapotrasteUp}
-          className="px-2 py-1 h-8 w-8 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
-          disabled={capotrasteNumber >= 12}
-        >
-          +
-        </button>
-      </div>
+      {!!capotrasteNumber && (
+        <div className="flex flex-row gap-2 items-center">
+          <button
+            onClick={handleCapotrasteDown}
+            className="px-2 py-1 h-8 w-8 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
+            disabled={capotrasteNumber <= 0}
+          >
+            -
+          </button>
+          <span className="px-2 py-1 w-10 text-center font-bold">
+            {capotrasteNumber}º
+          </span>
+          <button
+            onClick={handleCapotrasteUp}
+            className="px-2 py-1 h-8 w-8 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
+            disabled={capotrasteNumber >= 12}
+          >
+            +
+          </button>
+        </div>
+      )}
     </div>
   );
 };

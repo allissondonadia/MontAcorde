@@ -4,6 +4,7 @@ import FingerSelector from '../ui/FingerSelector';
 import ChordNameInput from '../chord/ChordNameInput';
 import Fretboard from '../ui/Fretboard';
 import CapotrasteControl from '../ui/CapotrasteControl';
+import RoundedControl from '../ui/RoundedControl';
 import { Dot, FRETBOARD_CONFIG, PRESETS, BASE_DOTS } from '../../types/chord';
 import { exportChordAsPng } from '../../utils/exportUtils';
 
@@ -118,6 +119,17 @@ const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
     }
   };
 
+  const handleRoundedChange = (corda: number, casa: number) => {
+    // Remove any existing rounded dot
+    setDots(prevDots => prevDots.filter(d => d.type !== "rounded"));
+    
+    // If corda and casa are valid, add the new rounded dot
+    if(corda > 0 && casa > 0) {
+      const roundedDot: Dot = { corda, casa, type: "rounded" };
+      setDots(prevDots => [...prevDots, roundedDot]);
+    }
+  };
+
   useEffect(() => {
     const handlePointerMove = (e: PointerEvent) => {
       // Future pointer move functionality can be added here
@@ -144,7 +156,7 @@ const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
         />
       </div>
             
-      <div className="gap-2 flex flex-col gap-24">
+      <div className="gap-2 flex flex-col gap-8">
         <FingerSelector
           selectedFinger={selectedFinger}
           onFingerSelect={setSelectedFinger}
@@ -152,6 +164,10 @@ const ChordBuilder = forwardRef<ChordBuilderRef>((props, ref) => {
         
         <CapotrasteControl
           onCapotrasteChange={handleCapotrasteChange}
+        />
+        
+        <RoundedControl
+          onRoundedChange={handleRoundedChange}
         />
       </div>
     </div>
