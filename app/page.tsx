@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic'
 import { useRef, useState } from 'react'
 import { ChordBuilderRef } from '../components/builder/ChordBuilder'
+import Link from 'next/link'
 
 const ChordBuilder = dynamic(() => import('../components/builder/ChordBuilder'), { ssr: false })
 
@@ -23,6 +24,12 @@ export default function Page() {
             <p className="text-gray-600 mt-2">Crie, edite e exporte diagramas de acordes visualmente.</p>
           </div>
           <div className="flex gap-2">
+            <Link
+              href="/tablatura"
+              className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors"
+            >
+              🎼 Tablatura
+            </Link>
             <button
               onClick={() => setShowHelp(!showHelp)}
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
